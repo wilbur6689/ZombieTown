@@ -195,6 +195,7 @@ class GameConstants {
   static const Map<String, String> zoneColors = {
     'residential': 'light_green',
     'commercial': 'light_blue',
+    'civic': 'dark_blue',
     'street': 'black',
     'ruins': 'grey',
     'nature': 'dark_green'
