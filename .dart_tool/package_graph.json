@@ -25,6 +25,7 @@
         "integration_test",
         "json_serializable",
         "mockito",
+        "sqflite_common_ffi",
         "test"
       ]
     },
@@ -1211,6 +1212,29 @@
       "name": "synchronized",
       "version": "3.4.0",
       "dependencies": []
+    },
+    {
+      "name": "sqflite_common_ffi",
+      "version": "2.3.6",
+      "dependencies": [
+        "meta",
+        "path",
+        "sqflite_common",
+        "sqlite3",
+        "synchronized"
+      ]
+    },
+    {
+      "name": "sqlite3",
+      "version": "2.9.0",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "typed_data",
+        "web"
+      ]
     }
   ],
   "configVersion": 1

@@ -15,6 +15,7 @@ import 'screens/battle_screen.dart';
 import 'screens/npc_screen.dart';
 import 'screens/event_screen.dart';
 import 'services/database_service.dart';
+import 'services/database_init_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,13 @@ void main() async {
   ]);
   
   // Initialize database
-  // await DatabaseService.instance.initDatabase();
+  try {
+    await DatabaseService.instance.initDatabase();
+    await DatabaseInitService.initializeDefaultData();
+    print('✓ Database initialized successfully');
+  } catch (e) {
+    print('Database initialization failed: $e');
+  }
   
   runApp(const ZombieTownApp());
 }
