@@ -75,74 +75,46 @@ ${_zombieHealth <= 15 ? 'The zombie looks badly wounded!' : ''}''';
 
 
   Widget _buildZombieDisplay(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Colors.transparent, Colors.black26],
-        ),
-      ),
-      child: Center(
-        child: Container(
-          width: 300,
-          height: 300,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: _isPlayerTurn ? Colors.red : Colors.yellow,
-              width: 4,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: const Offset(4, 4),
-                blurRadius: 8,
+    return Image.asset(
+      'assets/images/profile-zombies/sham01.png',
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          color: Colors.grey.shade800,
+          width: double.infinity,
+          height: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.warning,
+                size: 80,
+                color: Colors.red.shade400,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'ZOMBIE',
+                style: TextStyle(
+                  color: Colors.red.shade400,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Health: $_zombieHealth/50',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
               ),
             ],
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              'assets/images/profile-zombies/sham01.png',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey.shade800,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.warning,
-                        size: 80,
-                        color: Colors.red.shade400,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'ZOMBIE',
-                        style: TextStyle(
-                          color: Colors.red.shade400,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Health: $_zombieHealth/50',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 

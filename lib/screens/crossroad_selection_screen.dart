@@ -6,11 +6,6 @@ class CrossroadSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Crossroad'),
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.white,
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -18,24 +13,50 @@ class CrossroadSelectionScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: GridView.builder(
-          padding: const EdgeInsets.all(16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-          ),
-          itemCount: 32, // 8x4 grid
-          itemBuilder: (context, index) {
-            final row = index ~/ 4 + 1;
-            final col = String.fromCharCode(65 + (index % 4)); // A, B, C, D
-            final crossroadId = '$col$row';
-            
-            return _CrossroadTile(
-              crossroadId: crossroadId,
-              onTap: () => _selectCrossroad(context, crossroadId),
-            );
-          },
+        child: Stack(
+          children: [
+            // Main grid content
+            GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 6,
+                mainAxisSpacing: 6,
+                childAspectRatio: 1.0,
+              ),
+              itemCount: 16, // 4x4 grid
+              itemBuilder: (context, index) {
+                final row = index ~/ 4 + 1;
+                final col = String.fromCharCode(65 + (index % 4)); // A, B, C, D
+                final crossroadId = '$col$row';
+                
+                return _CrossroadTile(
+                  crossroadId: crossroadId,
+                  onTap: () => _selectCrossroad(context, crossroadId),
+                );
+              },
+            ),
+            // Back button on the right side
+            Positioned(
+              top: 40,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.green, width: 2),
+                ),
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

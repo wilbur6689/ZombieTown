@@ -19,9 +19,9 @@ class _MainGameScreenState extends State<MainGameScreen> {
       centerContent: _getCenterContent(),
       actions: [
         NavigationAction(
-          title: 'Map View',
-          icon: Icons.map,
-          onPressed: () => setState(() => _currentView = 'map'),
+          title: 'Explore',
+          icon: Icons.explore,
+          onPressed: () => Navigator.pushNamed(context, '/crossroad-selection'),
         ),
         NavigationAction(
           title: 'Inventory',
@@ -106,22 +106,11 @@ class _GameMapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/16x9-city-grid-01.png',
-            height: 300,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/crossroad-selection'),
-            child: const Text('Explore Crossroads'),
-          ),
-        ],
-      ),
+    return Image.asset(
+      'assets/images/16x9-city-grid-01.png',
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
     );
   }
 }

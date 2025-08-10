@@ -38,6 +38,90 @@ class _POILayoutScreenState extends State<POILayoutScreen> {
       hasBeenSearched: false,
       zombieCount: 2,
     ),
+    RoomData(
+      id: 'bathroom',
+      name: 'Bathroom',
+      description: 'Small bathroom with basic amenities',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'closet',
+      name: 'Closet',
+      description: 'Storage space for clothes and items',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'basement',
+      name: 'Basement',
+      description: 'Dark underground storage area',
+      hasBeenSearched: false,
+      zombieCount: 3,
+    ),
+    RoomData(
+      id: 'attic',
+      name: 'Attic',
+      description: 'Dusty space under the roof',
+      hasBeenSearched: false,
+      zombieCount: 1,
+    ),
+    RoomData(
+      id: 'garage',
+      name: 'Garage',
+      description: 'Vehicle storage and workshop',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'office',
+      name: 'Office',
+      description: 'Home office with desk and computer',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'dining_room',
+      name: 'Dining Room',
+      description: 'Formal dining area',
+      hasBeenSearched: false,
+      zombieCount: 1,
+    ),
+    RoomData(
+      id: 'laundry',
+      name: 'Laundry Room',
+      description: 'Washing and utility area',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'pantry',
+      name: 'Pantry',
+      description: 'Food storage area',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'hallway',
+      name: 'Hallway',
+      description: 'Connecting corridor',
+      hasBeenSearched: false,
+      zombieCount: 1,
+    ),
+    RoomData(
+      id: 'balcony',
+      name: 'Balcony',
+      description: 'Outdoor balcony space',
+      hasBeenSearched: false,
+      zombieCount: 0,
+    ),
+    RoomData(
+      id: 'guest_room',
+      name: 'Guest Room',
+      description: 'Additional bedroom for visitors',
+      hasBeenSearched: false,
+      zombieCount: 1,
+    ),
   ];
 
   @override
@@ -46,17 +130,6 @@ class _POILayoutScreenState extends State<POILayoutScreen> {
     final poiId = args['poiId'] ?? 'unknown';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Explore Building'),
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () => Navigator.pushNamed(context, '/character'),
-          ),
-        ],
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -64,41 +137,64 @@ class _POILayoutScreenState extends State<POILayoutScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(8),
+            // Main grid content
+            GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 1.0,
               ),
-              child: const Text(
-                'Tap on rooms to explore them. Be careful of zombies!',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
+              itemCount: _rooms.length,
+              itemBuilder: (context, index) {
+                final room = _rooms[index];
+                return _RoomTile(
+                  room: room,
+                  onTap: () => _exploreRoom(room),
+                );
+              },
+            ),
+            // Back button on the right side
+            Positioned(
+              top: 40,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.green, width: 2),
                 ),
-                textAlign: TextAlign.center,
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.2,
+            // Character button (moved to left side for accessibility)
+            Positioned(
+              top: 40,
+              left: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.blue, width: 2),
                 ),
-                itemCount: _rooms.length,
-                itemBuilder: (context, index) {
-                  final room = _rooms[index];
-                  return _RoomTile(
-                    room: room,
-                    onTap: () => _exploreRoom(room),
-                  );
-                },
+                child: IconButton(
+                  onPressed: () => Navigator.pushNamed(context, '/character'),
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
               ),
             ),
           ],
@@ -178,14 +274,14 @@ class _RoomTile extends StatelessWidget {
           color: room.hasBeenSearched 
               ? Colors.grey.withOpacity(0.8)
               : Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: room.zombieCount > 0 ? Colors.red : Colors.green,
             width: 2,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -195,28 +291,31 @@ class _RoomTile extends StatelessWidget {
                     : room.hasBeenSearched 
                         ? Icons.check_circle 
                         : Icons.search,
-                size: 32,
+                size: 20,
                 color: room.zombieCount > 0 
                     ? Colors.red 
                     : room.hasBeenSearched 
                         ? Colors.grey 
                         : Colors.green,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 2),
               Text(
                 room.name,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               if (room.zombieCount > 0)
                 Text(
-                  '${room.zombieCount} zombies',
+                  '${room.zombieCount}Z',
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 8,
                     color: Colors.red,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
             ],

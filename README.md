@@ -27,9 +27,16 @@ A companion mobile application for the ZombieTown RPG board game. This app handl
 
 3. **Run on Device/Simulator**
    ```bash
-   flutter run
+   flutter run --debug (default debug mode)
+   flutter run --profile (performance testing)
+   flutter run --release (release mode)
    ```
 
+4. **Run on Device in Chrome**
+   ```bash
+   flutter run -d chrome (debug mode)
+   flutter run --profile -d chrome (profile mode)
+   ```
 ## Development
 
 - **Hot Reload**: Save files or press 'r' in terminal

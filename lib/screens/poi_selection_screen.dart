@@ -9,11 +9,6 @@ class POISelectionScreen extends StatelessWidget {
     final crossroadId = args['crossroadId'] ?? 'Unknown';
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Crossroad $crossroadId'),
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.white,
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -21,62 +16,116 @@ class POISelectionScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Select a Point of Interest to explore',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
+            // Main grid content
+            GridView.count(
+              padding: const EdgeInsets.all(16),
+              crossAxisCount: 4,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.8,
+              children: [
+                _POITile(
+                  title: 'Residential\nHouse',
+                  imagePath: 'assets/images/building-residential/house01.png',
+                  onTap: () => _explorePOI(context, 'house_01'),
                 ),
-                textAlign: TextAlign.center,
-              ),
+                _POITile(
+                  title: 'Apartment\nComplex',
+                  imagePath: 'assets/images/building-residential/apartment01.png',
+                  onTap: () => _explorePOI(context, 'apartment_01'),
+                ),
+                _POITile(
+                  title: 'Grocery\nStore',
+                  imagePath: 'assets/images/building-commercial/grocery01.png',
+                  onTap: () => _explorePOI(context, 'grocery_01'),
+                ),
+                _POITile(
+                  title: 'Gas\nStation',
+                  imagePath: 'assets/images/building-commercial/gas-station01.png',
+                  onTap: () => _explorePOI(context, 'gas_station_01'),
+                ),
+                _POITile(
+                  title: 'Police\nStation',
+                  imagePath: 'assets/images/building-civil/police01.png',
+                  onTap: () => _explorePOI(context, 'police_01'),
+                ),
+                _POITile(
+                  title: 'Hospital',
+                  imagePath: 'assets/images/building-civil/hospital01.png',
+                  onTap: () => _explorePOI(context, 'hospital_01'),
+                ),
+                _POITile(
+                  title: 'Warehouse',
+                  imagePath: 'assets/images/building-commercial/warehouse01.png',
+                  onTap: () => _explorePOI(context, 'warehouse_01'),
+                ),
+                _POITile(
+                  title: 'School',
+                  imagePath: 'assets/images/building-civil/school01.png',
+                  onTap: () => _explorePOI(context, 'school_01'),
+                ),
+                _POITile(
+                  title: 'Office\nBuilding',
+                  imagePath: 'assets/images/building-commercial/office01.png',
+                  onTap: () => _explorePOI(context, 'office_01'),
+                ),
+                _POITile(
+                  title: 'Factory',
+                  imagePath: 'assets/images/building-commercial/factory01.png',
+                  onTap: () => _explorePOI(context, 'factory_01'),
+                ),
+                _POITile(
+                  title: 'Fire\nStation',
+                  imagePath: 'assets/images/building-civil/fire-station01.png',
+                  onTap: () => _explorePOI(context, 'fire_station_01'),
+                ),
+                _POITile(
+                  title: 'Church',
+                  imagePath: 'assets/images/building-civil/church01.png',
+                  onTap: () => _explorePOI(context, 'church_01'),
+                ),
+                _POITile(
+                  title: 'Mall',
+                  imagePath: 'assets/images/building-commercial/mall01.png',
+                  onTap: () => _explorePOI(context, 'mall_01'),
+                ),
+                _POITile(
+                  title: 'Restaurant',
+                  imagePath: 'assets/images/building-commercial/restaurant01.png',
+                  onTap: () => _explorePOI(context, 'restaurant_01'),
+                ),
+                _POITile(
+                  title: 'Park',
+                  imagePath: 'assets/images/building-civil/park01.png',
+                  onTap: () => _explorePOI(context, 'park_01'),
+                ),
+                _POITile(
+                  title: 'Library',
+                  imagePath: 'assets/images/building-civil/library01.png',
+                  onTap: () => _explorePOI(context, 'library_01'),
+                ),
+              ],
             ),
-            Expanded(
-              child: GridView.count(
-                padding: const EdgeInsets.all(16),
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                children: [
-                  _POITile(
-                    title: 'Residential House',
-                    imagePath: 'assets/images/building-residential/house01.png',
-                    onTap: () => _explorePOI(context, 'house_01'),
+            // Back button on the right side
+            Positioned(
+              top: 40,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.brown, width: 2),
+                ),
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28,
                   ),
-                  _POITile(
-                    title: 'Apartment Complex',
-                    imagePath: 'assets/images/building-residential/apartment01.png',
-                    onTap: () => _explorePOI(context, 'apartment_01'),
-                  ),
-                  _POITile(
-                    title: 'Grocery Store',
-                    imagePath: 'assets/images/building-commercial/grocery01.png',
-                    onTap: () => _explorePOI(context, 'grocery_01'),
-                  ),
-                  _POITile(
-                    title: 'Gas Station',
-                    imagePath: 'assets/images/building-commercial/gas-station01.png',
-                    onTap: () => _explorePOI(context, 'gas_station_01'),
-                  ),
-                  _POITile(
-                    title: 'Police Station',
-                    imagePath: 'assets/images/building-civil/police01.png',
-                    onTap: () => _explorePOI(context, 'police_01'),
-                  ),
-                  _POITile(
-                    title: 'Hospital',
-                    imagePath: 'assets/images/building-civil/hospital01.png',
-                    onTap: () => _explorePOI(context, 'hospital_01'),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -112,15 +161,15 @@ class _POITile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.brown, width: 2),
         ),
         child: Column(
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
                 child: Image.asset(
                   imagePath,
                   width: double.infinity,
@@ -130,7 +179,7 @@ class _POITile extends StatelessWidget {
                       color: Colors.grey.shade300,
                       child: const Icon(
                         Icons.image_not_supported,
-                        size: 40,
+                        size: 30,
                         color: Colors.grey,
                       ),
                     );
@@ -139,14 +188,14 @@ class _POITile extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(4),
                 child: Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,

@@ -63,6 +63,17 @@
       ]
     },
     {
+      "name": "sqflite_common_ffi",
+      "version": "2.3.6",
+      "dependencies": [
+        "meta",
+        "path",
+        "sqflite_common",
+        "sqlite3",
+        "synchronized"
+      ]
+    },
+    {
       "name": "test",
       "version": "1.25.15",
       "dependencies": [
@@ -488,6 +499,32 @@
         "vector_math",
         "vm_service",
         "webdriver"
+      ]
+    },
+    {
+      "name": "synchronized",
+      "version": "3.4.0",
+      "dependencies": []
+    },
+    {
+      "name": "sqflite_common",
+      "version": "2.5.6",
+      "dependencies": [
+        "meta",
+        "path",
+        "synchronized"
+      ]
+    },
+    {
+      "name": "sqlite3",
+      "version": "2.9.0",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "typed_data",
+        "web"
       ]
     },
     {
@@ -997,15 +1034,6 @@
       ]
     },
     {
-      "name": "sqflite_common",
-      "version": "2.5.6",
-      "dependencies": [
-        "meta",
-        "path",
-        "synchronized"
-      ]
-    },
-    {
       "name": "sqflite_platform_interface",
       "version": "2.4.0",
       "dependencies": [
@@ -1076,16 +1104,21 @@
       ]
     },
     {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
+    },
+    {
       "name": "web_socket",
       "version": "1.0.1",
       "dependencies": [
         "web"
       ]
-    },
-    {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
     },
     {
       "name": "source_maps",
@@ -1177,11 +1210,6 @@
       ]
     },
     {
-      "name": "ffi",
-      "version": "2.1.4",
-      "dependencies": []
-    },
-    {
       "name": "plugin_platform_interface",
       "version": "2.1.8",
       "dependencies": [
@@ -1206,34 +1234,6 @@
         "material_color_utilities",
         "meta",
         "vector_math"
-      ]
-    },
-    {
-      "name": "synchronized",
-      "version": "3.4.0",
-      "dependencies": []
-    },
-    {
-      "name": "sqflite_common_ffi",
-      "version": "2.3.6",
-      "dependencies": [
-        "meta",
-        "path",
-        "sqflite_common",
-        "sqlite3",
-        "synchronized"
-      ]
-    },
-    {
-      "name": "sqlite3",
-      "version": "2.9.0",
-      "dependencies": [
-        "collection",
-        "ffi",
-        "meta",
-        "path",
-        "typed_data",
-        "web"
       ]
     }
   ],
