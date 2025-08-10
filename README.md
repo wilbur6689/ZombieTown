@@ -27,22 +27,69 @@ A companion mobile application for the ZombieTown RPG board game. This app handl
 
 3. **Run on Device/Simulator**
    ```bash
-   flutter run --debug (default debug mode)
-   flutter run --profile (performance testing)
-   flutter run --release (release mode)
+   flutter run                    # Debug mode (default)
+   flutter run --profile         # Performance testing
+   flutter run --release         # Release mode
+   flutter run -d linux          # Desktop (full database support)
+   flutter run -d chrome         # Web (UI only, no database)
    ```
+## Development & Building
 
-4. **Run on Device in Chrome**
-   ```bash
-   flutter run -d chrome (debug mode)
-   flutter run --profile -d chrome (profile mode)
-   ```
-## Development
-
+### Development Commands
 - **Hot Reload**: Save files or press 'r' in terminal
 - **Testing**: `flutter test`
-- **Build APK**: `flutter build apk`
+- **Integration Tests**: `flutter test integration_test/`
 - **Linting**: Automatic with analysis_options.yaml
+
+### Building for Android
+```bash
+# Debug APK (fastest, for testing)
+flutter build apk --debug
+
+# Release APK (optimized, for distribution)  
+flutter build apk --release
+
+# App Bundle for Google Play Store
+flutter build appbundle --release
+```
+
+### Platform Support
+- **Mobile (Android/iOS)**: Full functionality with SQLite database
+- **Desktop (Linux/Windows/macOS)**: Full functionality, ideal for development
+- **Web**: UI only - database features disabled (SQLite not supported)
+
+### Testing Database
+- Use **desktop** (`flutter run -d linux`) or **mobile device** for database testing
+- **"Test Database"** button available in app on supported platforms
+- Web version shows UI but database functions are disabled
+
+### Live Testing on Phone with Logs
+For real-time development and debugging on your phone:
+
+1. **Enable Developer Mode on Phone**
+   - Go to Settings → About Phone
+   - Tap "Build Number" 7 times
+   - Go back to Settings → Developer Options
+   - Enable "USB Debugging"
+
+2. **Connect Phone and Run**
+   ```bash
+   # Connect phone via USB cable
+   flutter devices                # Verify phone is detected
+   flutter run                    # Run app with live logs
+   ```
+
+3. **View Live Logs**
+   - All `print()` statements appear in terminal
+   - Database test results show in real-time
+   - Hot reload: Press 'r' to update app instantly
+   - Hot restart: Press 'R' for full restart
+
+4. **Alternative Log Viewing**
+   ```bash
+   flutter logs                   # View logs from installed APK
+   adb logcat | grep flutter      # System-level Flutter logs
+   ```
 
 ## Game Overview
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../widgets/common/three_panel_layout.dart';
+import '../utils/database_test_runner.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -45,8 +47,134 @@ The choice is yours, but remember - in ZombieTown, death is permanent, and the d
             // TODO: Implement credits screen
           },
         ),
+        if (!kIsWeb) NavigationAction(
+          title: 'Test Database',
+          icon: Icons.storage,
+          onPressed: () => _runDatabaseTests(context),
+        ),
       ],
     );
+  }
+
+  void _runDatabaseTests(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 20),
+            Text('Running database tests...'),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final results = await DatabaseTestRunner.runAllTests();
+      
+      if (!context.mounted) return;
+      Navigator.of(context).pop(); // Close progress dialog
+      
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(results.allTestsPassed ? '✅ Tests Passed' : '❌ Tests Failed'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 400,
+            child: SingleChildScrollView(
+              child: Text(
+                results.summary,
+                style: const TextStyle(fontFamily: 'monospace'),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+            TextButton(
+              onPressed: () => _testRandomNames(context),
+              child: const Text('Test Names'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      Navigator.of(context).pop(); // Close progress dialog
+      
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('❌ Test Error'),
+          content: Text('Database test failed: $e'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _testRandomNames(BuildContext context) async {
+    try {
+      final names = await DatabaseTestRunner.testRandomNames(20);
+      
+      if (!context.mounted) return;
+      Navigator.of(context).pop(); // Close previous dialog
+      
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('🎲 Random Name Test'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 300,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Generated ${names.length} unique names from 20 attempts:'),
+                  const SizedBox(height: 10),
+                  ...names.map((name) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text('• $name'),
+                  )),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('❌ Name Test Error'),
+          content: Text('Random name test failed: $e'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _buildCenterContent(BuildContext context) {

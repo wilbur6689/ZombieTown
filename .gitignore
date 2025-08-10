@@ -90,7 +90,6 @@ android/local.properties
 **/windows/flutter/generated_plugins.cmake
 
 # Web Generated Files
-lib/generated_plugin_registrant.dart
 
 # Coverage
 coverage/

@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'database_service.dart';
 
 class DatabaseInitService {
   static final DatabaseService _dbService = DatabaseService.instance;
 
   static Future<void> initializeDefaultData() async {
+    if (kIsWeb) {
+      throw UnsupportedError('Database initialization not supported on web. Please run on mobile device or desktop.');
+    }
     await _initializePOITemplates();
     await _initializeCraftingRecipes();
     await _initializeDefaultNPCs();

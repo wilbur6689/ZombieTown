@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/game_state.dart';
@@ -25,6 +26,9 @@ class DatabaseService {
   }
 
   Future<Database> get database async {
+    if (kIsWeb) {
+      throw UnsupportedError('SQLite is not supported on web. Please run on mobile device or desktop.');
+    }
     _database ??= await _initDatabase();
     return _database!;
   }
@@ -42,6 +46,9 @@ class DatabaseService {
   }
 
   Future<void> initDatabase() async {
+    if (kIsWeb) {
+      throw UnsupportedError('Database initialization not supported on web. Please run on mobile device or desktop.');
+    }
     await database;
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/game_provider.dart';
@@ -26,13 +27,17 @@ void main() async {
     DeviceOrientation.landscapeRight,
   ]);
   
-  // Initialize database
-  try {
-    await DatabaseService.instance.initDatabase();
-    await DatabaseInitService.initializeDefaultData();
-    print('✓ Database initialized successfully');
-  } catch (e) {
-    print('Database initialization failed: $e');
+  // Initialize database (only on mobile/desktop, not web)
+  if (!kIsWeb) {
+    try {
+      await DatabaseService.instance.initDatabase();
+      await DatabaseInitService.initializeDefaultData();
+      print('✓ Database initialized successfully');
+    } catch (e) {
+      print('Database initialization failed: $e');
+    }
+  } else {
+    print('ℹ️ Running on web - SQLite database disabled. Use mobile device for full functionality.');
   }
   
   runApp(const ZombieTownApp());
